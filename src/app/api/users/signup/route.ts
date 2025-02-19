@@ -31,16 +31,23 @@ export async function POST(req: NextRequest) {
         });
 
         const savedUser = await newUser.save();
-        sendEmail({
+        const emailSent = await sendEmail({
             email: savedUser.email,
             emailType: "VERIFY",
             userId: savedUser._id,
-        })
+        });
+        
+        if (!emailSent) {
+            return NextResponse.json({
+                error: "Failed to send verification email",
+            }, { status: 500 });
+        }
+        
         return NextResponse.json({
             message: "User registered successfully",
             user: savedUser,
             status: 201,
-        })
+        });
     }catch (e : any){
         return NextResponse.json({error : e.message}, {status : 500});
     }

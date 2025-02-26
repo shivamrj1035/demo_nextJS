@@ -6,7 +6,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import Link from "next/link";
 import Loader from "@/components/Loader"
-import Modal from "@/components/MOdal"
+import Modal from "@/components/Modal"
 import BubbleText from "@/components/BubbleText"
 export default function ProfilePage() {
   const router = useRouter();

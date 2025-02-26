@@ -5,6 +5,7 @@ import React, { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import toast from "react-hot-toast";
+import EncButton from "@/components/EncButton"
 
 export default function LoginPage() {
     const router = useRouter();
@@ -75,13 +76,11 @@ export default function LoginPage() {
                     </div>
                 </div>
 
-                <button
-                    onClick={onLogin}
-                    disabled={buttonDisable}
-                    className="w-full bg-blue-600 hover:bg-blue-700 mt-6 py-3 rounded-lg text-white font-semibold transition"
-                >
-                    {buttonDisable ? "Please fill up data" : "Login"}
-                </button>
+
+                {buttonDisable ? <EncButton handleClick={onLogin} placeholder={"please fill up details"} /> : <EncButton handleClick={onLogin}
+                    placeholder={"Login"} />}
+
+
 
                 <p className="text-gray-400 text-center mt-4">
                     new user?

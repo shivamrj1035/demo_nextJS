@@ -5,11 +5,14 @@ import {useRouter} from "next/navigation";
 import axios from "axios";
 import toast from "react-hot-toast";
 import Link from "next/link";
-
+import Loader from "@/components/Loader"
+import Modal from "@/components/MOdal"
+import BubbleText from "@/components/BubbleText"
 export default function ProfilePage() {
   const router = useRouter();
   const [buttonDisable, setButtonDisable] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   const [user, setUser] = useState({
     id: "",
@@ -28,6 +31,10 @@ export default function ProfilePage() {
     } finally {
       setLoading(false);
     }
+  }
+
+  const handleModal = () => {
+    setOpen(!open);
   }
 
   const getUserDetails = async () => {
@@ -57,10 +64,10 @@ export default function ProfilePage() {
       <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white px-6">
         {
           loading ?
-              <div className="text-white text-3xl">Loading...</div>
+            <Loader/>
               :
               <div className="bg-gray-800 p-8 rounded-2xl shadow-lg w-full max-w-md text-center">
-                <h1 className="text-2xl font-semibold my-4">{user.username}</h1>
+                <BubbleText text={user.username} />
                 <p className="text-gray-400">{user.email}</p>
                 <p className="text-blue-500"><Link href={`/profile/${user.id}`}>Check User Id</Link></p>
                 <button
@@ -70,7 +77,18 @@ export default function ProfilePage() {
                 >
                   {buttonDisable ? "Please fill up data" : "Logout"}
                 </button>
+                <button
+                    onClick ={handleModal}
+                    className="w-full bg-blue-600 hover:bg-blue-700 mt-6 py-3 rounded-lg text-white font-semibold transition"
+                >
+                  Fun?
+                </button>
+                {
+                  open &&
+                  <Modal isOpen={open} setIsOpen={setOpen}/>
+                }
               </div>
+              
 
         }
       </div>

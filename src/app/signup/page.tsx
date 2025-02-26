@@ -1,9 +1,11 @@
 "use client";
 import Link from 'next/link';
-import React, {useEffect} from 'react';
-import {useRouter} from 'next/navigation';
+import React, { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import toast from "react-hot-toast";
+import EncButton from '@/components/EncButton';
+
 
 export default function SignupPage() {
     const router = useRouter();
@@ -15,10 +17,10 @@ export default function SignupPage() {
         password: "",
     });
 
-    useEffect(()=> {
-        if(user.email.length > 0 && user.username.length > 0 && user.password.length > 0){
-          setButtonDisable(false);
-        }else{
+    useEffect(() => {
+        if (user.email.length > 0 && user.username.length > 0 && user.password.length > 0) {
+            setButtonDisable(false);
+        } else {
             setButtonDisable(true);
         }
     }, [user])
@@ -30,10 +32,10 @@ export default function SignupPage() {
             toast.success('Signup successful!');
             console.log('created', res.data)
             router.push('/login');
-        }catch (e : any){
-            console.log('Error',e.message);
+        } catch (e: any) {
+            console.log('Error', e.message);
             toast.error('Error', e.message);
-        }finally {
+        } finally {
             setLoading(false);
         }
     };
@@ -81,13 +83,9 @@ export default function SignupPage() {
                             </div>
                         </div>
 
-                        <button
-                            onClick={onSignup}
-                            disabled={buttonDisable}
-                            className="w-full bg-blue-600 hover:bg-blue-700 mt-6 py-3 rounded-lg text-white font-semibold transition"
-                        >
-                            {buttonDisable ? "Fill he details" : "Sign Up"}
-                        </button>
+
+                        {buttonDisable ? <EncButton handleClick={onSignup} placeholder={"please fill up details"} /> : <EncButton handleClick={onSignup} placeholder={"Sign up"} />}
+
 
                         <p className="text-gray-400 text-center mt-4">
                             Already have an account?
